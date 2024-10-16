@@ -7,9 +7,9 @@ COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 # Enable Apache modules
 RUN a2enmod rewrite
 
-# Copy application source directly to the web directory
+# Set the correct permissions for the document root
+RUN chown -R www-data:www-data /var/www/html/
+
+# Copy application source
 COPY . /var/www/html/
 # Copie le code source dans le répertoire web d'Apache
-
-# Change ownership of the web directory
-RUN chown -R www-data:www-data /var/www/html/
