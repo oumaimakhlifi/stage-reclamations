@@ -1,15 +1,11 @@
-FROM php:8.2-apache
+FROM php:7.4-apache
 
-# Update and upgrade packages
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y zlib1g-dev libwebp-dev libpng-dev && \
-    docker-php-ext-install gd && \
-    apt-get install -y libzip-dev && \
-    docker-php-ext-install zip && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Enable Apache rewrite module
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY start-apache /usr/local/bin
 RUN a2enmod rewrite
 
-# Expose port 80
-EXPOSE 80
+# Copy application source
+COPY src /var/www/
+RUN chown -R www-data:www-data /var/www
+
+CMD ["start-apache"]
