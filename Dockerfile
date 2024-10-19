@@ -1,4 +1,4 @@
-# Use the official PHP image with Apache.
+# Use the official PHP image with Apache
 FROM php:7.4-apache
 
 # Copy Apache configuration
